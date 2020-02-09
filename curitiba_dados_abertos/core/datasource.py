@@ -57,3 +57,6 @@ class Datasource(object):
         }
 
         return data
+
+    def download_latest(self):
+        pass

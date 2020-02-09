@@ -14,3 +14,8 @@ def test_provision_dataset(ds156):
 
 def test_dataset_latest_csv_url(ds156):
     assert 'csv' in ds156.latest_csv_url
+
+def test_dataset_download_latest_csv_on_current_dir(ds156):
+    filename = ds156.download_latest()
+
+    assert type(filename) == 'str'
