@@ -79,6 +79,8 @@ class Datasource(object):
         if request_index.status_code != 200:
             raise OSError('Unable to fetch text index')
 
-        urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', request_index.text)
+        urls = re.findall(
+            rf'href=\"(.+){self.file_pattern}\"',
+            request_index.text)
 
         return urls

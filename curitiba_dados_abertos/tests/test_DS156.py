@@ -1,4 +1,4 @@
-import os
+import os, re
 
 import pytest
 
@@ -41,5 +41,7 @@ def test_ds_get_available_list(ds156):
     list_items = ds156.list_available_items()
 
     assert type(list_items) == list
+    assert len(list_items) > 0
 
-    print(list_items)
+    for item in list_items:
+        assert bool(re.match(r'(2[0-9]{3}-[0-9]{2}-[0-9]{2})', item)) == True
