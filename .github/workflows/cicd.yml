@@ -24,5 +24,4 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Build and run tests
         run: |
-          python setup.py check
-          pytest --cov=curitiba_dados_abertos --cov-fail-under=68
+          pytest --cov=curitiba_dados_abertos --cov-fail-under=68 -s
