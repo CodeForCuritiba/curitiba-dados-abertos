@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from curitiba_dados_abertos.datasources import DS156
@@ -15,7 +17,29 @@ def test_provision_dataset(ds156):
 def test_dataset_latest_csv_url(ds156):
     assert 'csv' in ds156.latest_csv_url
 
-def test_dataset_download_latest_csv_on_current_dir(ds156):
-    filename = ds156.download_latest()
+def test_ds_download_latest_csv_on_current_dir(ds156):
+    filename, encoding = ds156.download()
 
-    assert type(filename) == 'str'
+    assert type(filename) == str
+    assert type(encoding) == str
+
+    assert os.path.isfile(filename)
+    assert ds156.file_pattern in filename
+
+def test_ds_download_old_on_current_dir(ds156):
+    filename, encoding = ds156.download(date_prefix='2020-01-01')
+
+    assert type(filename) == str
+    assert type(encoding) == str
+
+    assert os.path.isfile(filename)
+    assert ds156.file_pattern in filename
+    assert '2020-01-01' in filename
+
+def test_ds_get_available_list(ds156):
+
+    list_items = ds156.list_available_items()
+
+    assert type(list_items) == list
+
+    print(list_items)

@@ -1,19 +1,19 @@
-import request
+import os
+
+import requests
 
 
-def download_file(url, folder=None, name_override=None, force_overwrite=False):
+def download_file(url, folder=None, force_overwrite=False):
     """ Downloads a file from a website
     params:
         - url (mandatory)
-        - folder - Destination folder;
-        - name_override - If provided, override the name of file,
-                          if not pick latest part of url
-        - force_overwrite - (bool) - Default False
+        - folder - Destination folder; None means current directory
+        - force_overwrite - if False, it will check if the dest file exists. If does, don't update
     returns:
         - local_filename - The path of downloaded file
         - file_encoding
     """
-    local_filename = url.split('/')[-1] if not name_override else name_override
+    local_filename = url.split('/')[-1]
     local_filename = local_filename if not folder \
         else f'{folder}/{local_filename}'
 
