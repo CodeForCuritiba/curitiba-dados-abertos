@@ -23,8 +23,11 @@ jobs:
           pipenv_to_requirements
           pip install -r requirements-dev.txt
       - name: Run tests
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          pytest --cov=curitiba_dados_abertos --cov-fail-under=68 -s;
+          pytest --cov=curitiba_dados_abertos --cov-report=xml --cov-fail-under=68 -s
+          bash <(curl -s https://codecov.io/bash) 
       - name: Packaging
         run: |
           python setup.py sdist bdist_wheel
