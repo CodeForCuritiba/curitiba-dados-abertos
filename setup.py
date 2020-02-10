@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup, find_namespace_packages
 
 
 setup(
@@ -8,7 +8,7 @@ setup(
     author='Jonhnatha Trigueiro',
     author_email='joepreludian@gmail.com',
     url='https://github.com/CodeForCuritiba/curitiba-dados-abertos',
-    packages=['curitiba_dados_abertos'],
+    packages=find_namespace_packages(),
     license='MIT License',
     install_requires=[
         'requests (>2.20)'
