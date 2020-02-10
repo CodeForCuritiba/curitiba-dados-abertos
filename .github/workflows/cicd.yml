@@ -25,7 +25,7 @@ jobs:
       - name: Build and run tests
         run: |
           pytest --cov=curitiba_dados_abertos --cov-fail-under=68 -s
-          pep517.build --source --binary --out-dir dist/
+          python -m pep517.build --source --binary --out-dir dist/
       - name: Publish package
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
