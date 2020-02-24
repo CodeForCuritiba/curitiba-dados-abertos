@@ -34,7 +34,7 @@ jobs:
       - name: Verify if package was deployed
         run: |
           python -c "import pkg_resources; print(pkg_resources.require('curitiba-dados-abertos')[0].version)" > VERSION
-          curl https://pypi.org/pypi/curitiba-dados-abertos/json 2> /dev/null | python3 -c "import sys, json; versions = json.load(sys.stdin)['releases'].keys(); print(' ' + ' '.join(versions) + ' ')" | grep " $(cat VERSION) " && return 11 || return 0
+          curl https://pypi.org/pypi/curitiba-dados-abertos/json 2> /dev/null | python3 -c "import sys, json; versions = json.load(sys.stdin)['releases'].keys(); print(' ' + ' '.join(versions) + ' ')" | grep " $(cat VERSION) " && exit 11 || exit 0
       - name: Publish Package on PyPI
         if: success() && github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
