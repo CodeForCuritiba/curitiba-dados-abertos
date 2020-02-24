@@ -73,6 +73,9 @@ class Datasource(object):
                              folder=self.download_folder, 
                              force_overwrite=self.force_overwrite_file)
 
+    def get_pandas(self, date_prefix=None):
+        raise NotImplementedError()
+
     def list_available_items(self):
         request_index = requests.get(url=f'{self.data_root_url}/')
 
