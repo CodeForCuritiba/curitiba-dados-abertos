@@ -34,9 +34,10 @@ jobs:
       - name: Verify if package was already deployed
         run: |
           python -c "import pkg_resources; print(pkg_resources.require('curitiba-dados-abertos')[0].version)" > VERSION
-          curl https://pypi.org/pypi/curitiba-dados-abertos/json 2> /dev/null | python3 -c "import sys, json; versions = json.load(sys.stdin)['releases'].keys(); print(' ' + ' '.join(versions) + ' ')" | grep " $(cat VERSION) " && exit 11 || exit 0
+          cat VERSION
+          curl https://pypi.org/pypi/curitiba-dados-abertos/json 2> /dev/null | python3 -c "import sys, json; versions = json.load(sys.stdin)['releases'].keys(); print(' ' + ' '.join(versions) + ' ')" | grep " $(cat VERSION) "
       - name: Tagging version
-        if: success()
+        if: failure()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
