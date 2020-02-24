@@ -31,9 +31,24 @@ jobs:
       - name: Packaging
         run: |
           python setup.py sdist bdist_wheel
-      - name: Publish package
-        if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+      - name: Verify if package was deployed
+        run: |
+          python -c "import pkg_resources; print(pkg_resources.require('curitiba-dados-abertos')[0].version)" > VERSION
+          curl https://pypi.org/pypi/curitiba-dados-abertos/json 2> /dev/null | python3 -c "import sys, json; versions = json.load(sys.stdin)['releases'].keys(); print(' ' + ' '.join(versions) + ' ')" | grep " $(cat VERSION) " && return 11 || return 0
+      - name: Publish Package on PyPI
+        if: success() && github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
           password: ${{ secrets.pypi_password }}
+      - name: Tagging version
+        if: success()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag $(cat VERSION)
+      - name: Push Tags
+        if: success()
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.MY_GH_TOKEN }}
