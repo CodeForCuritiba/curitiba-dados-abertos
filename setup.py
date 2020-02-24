@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name='curitiba-dados-abertos',
-    version='1.0.0',
+    version='1.0.1',
     description='API Used to ease the access to the datasets of Curitiba Dados Abertos portal',
     author='Jonhnatha Trigueiro',
     author_email='joepreludian@gmail.com',
