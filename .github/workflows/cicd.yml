@@ -8,7 +8,7 @@ on:
     branches:
       - master
 jobs:
-  continuous-integration:
+  continuous-integration-deployment:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -28,10 +28,12 @@ jobs:
         run: |
           pytest --cov=curitiba_dados_abertos --cov-report=xml --cov-fail-under=68 -s
           bash <(curl -s https://codecov.io/bash) 
-      - name: Packaging
+      - name: Prepare Package
+        if: github.event_name == 'push'
         run: |
           python setup.py sdist bdist_wheel
       - name: Verify if package was already deployed
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           python -c "import pkg_resources; print(pkg_resources.require('curitiba-dados-abertos')[0].version)" > VERSION
           cat VERSION
