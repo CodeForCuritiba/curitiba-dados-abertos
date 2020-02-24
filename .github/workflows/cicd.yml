@@ -49,7 +49,7 @@ jobs:
           user: __token__
           password: ${{ secrets.pypi_password }}
       - name: Push Tags
-        if: success()
+        if: success() && github.event_name == 'push'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.MY_GH_TOKEN }}
