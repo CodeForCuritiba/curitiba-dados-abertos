@@ -7,7 +7,8 @@ SMALL_FILE_URL='https://support.oneskyapp.com/hc/en-us/article_attachments/20276
 def test_download_file_from_url():
     filename, encoding = download_file(url=SMALL_FILE_URL,
                                        folder=None,
-                                       force_overwrite=False)
+                                       force_overwrite=False,
+                                       try_get_infer_encoding=True)
 
     assert 'example_2.json' in filename
     assert type(encoding) == str
@@ -15,7 +16,8 @@ def test_download_file_from_url():
 def test_download_file_in_different_folder():
     filename, encoding = download_file(url=SMALL_FILE_URL,
                                        folder='/tmp',
-                                       force_overwrite=False)
+                                       force_overwrite=False,
+                                       try_get_infer_encoding=True)
 
     assert filename == '/tmp/example_2.json'
     assert type(encoding) == str
@@ -29,7 +31,8 @@ def test_download_file_with_force_overwrite():
         url='https://support.oneskyapp.com/hc/en-us/' \
             'article_attachments/202761627/example_1.json',
         folder='/tmp',
-        force_overwrite=True)
+        force_overwrite=True,
+        try_get_infer_encoding=True)
 
     assert filename == '/tmp/example_1.json'
     assert type(encoding) == str
@@ -50,7 +53,8 @@ def test_download_file_without_force_overwrite():
         url='https://support.oneskyapp.com/hc/en-us/' \
             'article_attachments/202761627/example_1.json',
         folder='/tmp',
-        force_overwrite=False)
+        force_overwrite=False,
+        try_get_infer_encoding=True)
 
     assert filename == '/tmp/example_1.json'
     assert type(encoding) == str
