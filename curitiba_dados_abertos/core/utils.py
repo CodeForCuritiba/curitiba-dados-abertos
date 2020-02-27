@@ -20,7 +20,7 @@ def download_file(url, folder=None, force_overwrite=False):
     file_encoding = None
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
-        file_encoding = r.encoding
+        file_encoding = r.apparent_encoding
 
         if os.path.isfile(local_filename):
 
