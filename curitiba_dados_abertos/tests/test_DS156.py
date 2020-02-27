@@ -27,14 +27,17 @@ def test_ds_download_latest_csv_on_current_dir(ds156):
     assert ds156.file_pattern in filename
 
 def test_ds_download_old_on_current_dir(ds156):
-    filename, encoding = ds156.download(date_prefix='2020-01-01')
+    list_items = ds156.list_available_items()
+    date_prefix_item = list_items[0]
+
+    filename, encoding = ds156.download(date_prefix=date_prefix_item)
 
     assert type(filename) == str
     assert type(encoding) == str
 
     assert os.path.isfile(filename)
     assert ds156.file_pattern in filename
-    assert '2020-01-01' in filename
+    assert date_prefix_item in filename
 
 def test_ds_get_available_list(ds156):
 
