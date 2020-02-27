@@ -1,3 +1,7 @@
+1.1.0
+-----
+- Add support for load dataframe of DS156
+
 1.0.5
 -----
 - Testing pipeline on PR

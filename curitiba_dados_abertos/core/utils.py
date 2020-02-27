@@ -3,7 +3,7 @@ import os
 import requests
 
 
-def download_file(url, folder=None, force_overwrite=False):
+def download_file(url, folder=None, force_overwrite=False, try_get_infer_encoding=False):
     """ Downloads a file from a website
     params:
         - url (mandatory)
@@ -20,7 +20,7 @@ def download_file(url, folder=None, force_overwrite=False):
     file_encoding = None
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
-        file_encoding = r.encoding
+        file_encoding = r.apparent_encoding if try_get_infer_encoding else r.encoding
 
         if os.path.isfile(local_filename):
 

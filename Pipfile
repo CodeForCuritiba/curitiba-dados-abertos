@@ -8,6 +8,7 @@ curitiba-dados-abertos = {editable = true,path = "."}
 pytest = "*"
 pip = "*"
 pytest-cov = "*"
+pandas = "*"
 
 [packages]
 
